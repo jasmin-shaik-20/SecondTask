@@ -2,13 +2,13 @@ import java.util.*
 
 
 class ShoppingCart {
-    val items = mutableMapOf<String, Int>()
+    var items = mutableMapOf<String, Int>()
     fun addItem(scanner: Scanner, list: MutableMap<String, Int>): MutableMap<String, Int> {
         println("How many items do you add")
         val num = scanner.nextInt()
         for (i in 1..num) {
             println("Enter the item")
-            var name = readln()
+            val name = readln()
             if (name !in list.keys) {
                 println("Item not found")
             } else if(name in items.keys&&name in list.keys){
@@ -27,7 +27,7 @@ class ShoppingCart {
         val num = scanner.nextInt()
         for (i in 1..num) {
             println("Enter the item")
-            var name = readln()
+            val name = readln()
             if (name !in items.keys) {
                 println("Item not found")
             } else {
@@ -47,7 +47,7 @@ class ShoppingCart {
 
     }
 
-    fun applyDiscount(discountPercentage: Double,scanner: Scanner): Double {
+    fun applyDiscount(discountPercentage: Double): Double {
         val discountedPrice = let {
             val totalPrice = calculateTotalPrice()
             totalPrice - (totalPrice * (discountPercentage / 100))
@@ -69,7 +69,10 @@ fun main() {
     list.put("belts", 80)
     list.put("socks", 30)
     println("Shopping Cart list is")
-    println(list)
+   for(i in list)
+   {
+       println("${i.key} = ${i.value}rs")
+   }
     var choice = 0
     while (choice != 5) {
         println("\nMenu:")
@@ -85,7 +88,7 @@ fun main() {
             1 -> items=cart.addItem(scanner,list)
             2 -> cart.removeItem(scanner,items)
             3 -> println( cart.calculateTotalPrice())
-            4 -> println(cart.applyDiscount(10.0 ,scanner))
+            4 -> println(cart.applyDiscount(10.0 ))
             5 -> println("Exiting...")
             else -> println("Invalid choice. Please try again.")
         }
