@@ -16,6 +16,7 @@ class ShoppingCart {
             }
             else{
                 list[name]?.let { items.put(name, it) }
+                println("Item added successfully")
             }
         }
         println(items)
@@ -47,14 +48,12 @@ class ShoppingCart {
 
     }
 
-    fun applyDiscount(discountPercentage: Double): Double {
-        val discountedPrice = let {
-            val totalPrice = calculateTotalPrice()
-            totalPrice - (totalPrice * (discountPercentage / 100))
+    fun applyDiscount(discountPercentage: Double, calculateTotalPrice: () -> Double): Double {
+        return calculateTotalPrice().let { totalPrice ->
+            val discountedPrice = totalPrice - (totalPrice * (discountPercentage / 100))
+            discountedPrice
         }
-        return discountedPrice
     }
-
 
 }
 
@@ -88,7 +87,7 @@ fun main() {
             1 -> items=cart.addItem(scanner,list)
             2 -> cart.removeItem(scanner,items)
             3 -> println( cart.calculateTotalPrice())
-            4 -> println(cart.applyDiscount(10.0 ))
+            4 -> println(cart.applyDiscount(10.0, cart::calculateTotalPrice))
             5 -> println("Exiting...")
             else -> println("Invalid choice. Please try again.")
         }
